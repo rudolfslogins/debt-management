@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+seed-data: true
+
+spring:
+  application:
+    name: debt-management
+  liquibase:
+    change-log: classpath:\db\changelog\db.changelog-master.yaml
+  jpa:
+    database: postgresql
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: jdbc:postgresql://localhost:5432/debt_management_all
+    username: debt_management
+    password: debt_management
+    driver-class-name: org.postgresql.Driver
+
+debug: true

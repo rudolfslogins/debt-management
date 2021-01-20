@@ -1,0 +1,118 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: customers
+      author: rudolfs.logins
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: customers
+      changes:
+        - createSequence:
+            sequenceName: customers_seq
+        - createTable:
+            tableName: customers
+            columns:
+              - column:
+                  name: customer_id
+                  type: int8
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: customer_pkey
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(35)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: surname
+                  type: varchar(35)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: country
+                  type: varchar(70)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: entity_created
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+              - column:
+                  name: entity_updated
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: debts
+      author: rudolfs.logins
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: debts
+      changes:
+        - createSequence:
+            sequenceName: debts_seq
+        - createTable:
+            tableName: debts
+            columns:
+              - column:
+                  name: debt_id
+                  type: int8
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: debt_pkey
+                    nullable: false
+              - column:
+                  name: customer_id
+                  type: int8
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency
+                  type: varchar(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: due_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: entity_created
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+              - column:
+                  name: entity_updated
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: customer_id
+            baseTableName: debts
+            constraintName: fk_debts_customers
+            referencedColumnNames: customer_id
+            referencedTableName: customers
+            deferrable: false
+            initiallyDeferred: false

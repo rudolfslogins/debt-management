@@ -13,6 +13,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,21 +27,22 @@ public class DebtService {
 
     public final ConversionService conversionService;
 
-    DebtDto getDebt(Long id) {
-        Debt debt = findDebt(id);
+    DebtDto getDebt(Long customerId, Long debtId) {
+        Debt debt = findDebt(customerId, debtId);
         return conversionService.convert(debt, DebtDto.class);
     }
 
-    List<DebtDto> getAllDebts() {
-        List<Debt> debts = debtRepository.findAll();
+    List<DebtDto> getAllDebtsByCustomer(Long customerID) {
+        Customer customer = findCustomer(customerID);
+        List<Debt> debts = debtRepository.findAllByCustomer(customer).orElse(Collections.emptyList());
         return debts.stream()
                 .map(debt -> conversionService.convert(debt, DebtDto.class))
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    void storeDebt(DebtInDto debtDto) {
-        Customer customer = findCustomer(debtDto.getCustomerId());
+    public void storeDebt(Long customerId, DebtInDto debtDto) {
+        Customer customer = findCustomer(customerId);
         Debt debt = new Debt();
         debt.setCustomer(customer);
         debt.setAmount(debtDto.getAmount());
@@ -50,11 +52,8 @@ public class DebtService {
     }
 
     @Transactional
-    DebtDto updateDebt(Long id, DebtInDto debtDto) {
-        Debt debt = findDebt(id);
-        if (!debtDto.getCustomerId().equals(debt.getCustomer().getId())) {
-            debt.setCustomer(findCustomer(debtDto.getCustomerId()));
-        }
+    public DebtDto updateDebt(Long customerId, Long debtId, DebtInDto debtDto) {
+        Debt debt = findDebt(customerId, debtId);
         debt.setAmount(debtDto.getAmount());
         debt.setCurrency(debtDto.getCurrency());
         debt.setDueDate(debtDto.getDueDate());
@@ -62,8 +61,8 @@ public class DebtService {
     }
 
     @Transactional
-    void deleteDebt(Long id) {
-        Debt debt = findDebt(id);
+    public void deleteDebt(Long customerId, Long debtId) {
+        Debt debt = findDebt(customerId, debtId);
         debtRepository.delete(debt);
     }
 
@@ -72,7 +71,9 @@ public class DebtService {
                     .orElseThrow(new CustomerNotFoundException(customerId));
     }
 
-    private Debt findDebt(Long id) {
-        return debtRepository.findFirstById(id).orElseThrow(new DebtNotFoundException(id));
+    private Debt findDebt(Long customerId, Long debtId) {
+        Customer customer = findCustomer(customerId);
+        return debtRepository.findFirstByCustomerAndId(customer, debtId)
+                .orElseThrow(new DebtNotFoundException(customerId, debtId));
     }
 }

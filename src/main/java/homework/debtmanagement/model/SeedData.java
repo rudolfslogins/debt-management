@@ -25,7 +25,7 @@ public class SeedData implements CommandLineRunner {
     private boolean seedData;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         loadSeedData();
     }
 
@@ -45,7 +45,14 @@ public class SeedData implements CommandLineRunner {
             customer2.setEmail("cook@test.com");
             customer2.setPassword("def456");
 
-            customerRepository.saveAll(List.of(customer1, customer2));
+            Customer customer3 = new Customer();
+            customer3.setName("Mickey");
+            customer3.setSurname("Jones");
+            customer3.setCountry("UK");
+            customer3.setEmail("mickey@test.com");
+            customer3.setPassword("ghi789");
+
+            customerRepository.saveAll(List.of(customer1, customer2, customer3));
 
             Debt debt1 = new Debt();
             debt1.setCustomer(customer1);

@@ -17,7 +17,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Validated
 @AllArgsConstructor
 @RestController
-@RequestMapping(value = "api/customer", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/customers", produces = APPLICATION_JSON_VALUE)
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -35,7 +35,7 @@ public class CustomerController {
     }
 
     @ApiOperation("Get all customers")
-    @GetMapping("all")
+    @GetMapping()
     public List<CustomerDto> getAllCustomers() {
         return customerService.getAllCustomers();
     }

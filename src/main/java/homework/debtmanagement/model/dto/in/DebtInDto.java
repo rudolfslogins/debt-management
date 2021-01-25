@@ -12,9 +12,6 @@ import java.time.LocalDate;
 @Builder
 public class DebtInDto {
 
-    @NotNull(message = "CustomerId must not be null")
-    Long customerId;
-
     @Positive(message = "Amount must be positive")
     @NotNull(message = "Amount must not be null")
     BigDecimal amount;

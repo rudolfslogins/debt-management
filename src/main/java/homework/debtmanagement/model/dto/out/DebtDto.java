@@ -1,6 +1,5 @@
 package homework.debtmanagement.model.dto.out;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Value;
 
@@ -17,11 +16,7 @@ public class DebtDto {
     BigDecimal amount;
     String currency;
     LocalDate dueDate;
-
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     LocalDateTime created;
-
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     LocalDateTime updated;
 
 }

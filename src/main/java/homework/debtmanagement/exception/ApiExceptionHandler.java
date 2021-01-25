@@ -1,5 +1,6 @@
 package homework.debtmanagement.exception;
 
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -37,7 +38,7 @@ public class ApiExceptionHandler {
     public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         return new ResponseEntity<>(
                 ex.getBindingResult().getAllErrors().stream()
-                        .map(err -> err.getDefaultMessage())
+                        .map(DefaultMessageSourceResolvable::getDefaultMessage)
                         .collect(toList()),
                 BAD_REQUEST
         );

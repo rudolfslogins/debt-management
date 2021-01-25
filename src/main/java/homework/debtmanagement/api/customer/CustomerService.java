@@ -40,18 +40,18 @@ public class CustomerService {
      }
 
      @Transactional
-     void storeCustomer(CustomerInDto customerDto) {
+     public void storeCustomer(CustomerInDto customerDto) {
         Customer customer = new Customer();
         customer.setName(customerDto.getName());
         customer.setSurname(customerDto.getSurname());
-        customer.setCountry(customerDto.getEmail());
+        customer.setCountry(customerDto.getCountry());
         customer.setEmail(customerDto.getEmail());
         customer.setPassword(customerDto.getPassword());
         customerRepository.save(customer);
      }
 
      @Transactional
-     CustomerDto updateCustomer(Long id, CustomerInDto customerDto) {
+     public CustomerDto updateCustomer(Long id, CustomerInDto customerDto) {
          Customer customer = findCustomer(id);
          customer.setName(customerDto.getName());
          customer.setSurname(customerDto.getSurname());
@@ -62,7 +62,7 @@ public class CustomerService {
     }
 
     @Transactional
-    void deleteCustomer(Long id) {
+    public void deleteCustomer(Long id) {
         Customer customer = findCustomer(id);
         customerRepository.delete(customer);
     }

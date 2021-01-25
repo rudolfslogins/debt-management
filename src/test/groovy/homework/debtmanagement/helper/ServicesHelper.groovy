@@ -16,7 +16,7 @@ class ServicesHelper {
                 id: id,
                 name: random(7, true, false),
                 surname: random(7, true, false),
-                country: 'UK',
+                country: 'uk',
                 email: random(10, true, true) + '@test.com',
                 password: random(10))
     }

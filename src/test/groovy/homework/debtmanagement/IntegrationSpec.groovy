@@ -22,10 +22,6 @@ abstract class IntegrationSpec extends Specification{
 
     public static final String PASSWORD = 'password'
 
-    public static final String USA = 'USA'
-
-    public static final String UK = 'UK'
-
     @Shared
     Long customerId = 1l
 

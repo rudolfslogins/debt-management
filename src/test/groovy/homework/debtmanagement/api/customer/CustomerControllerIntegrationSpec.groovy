@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.*
 import org.springframework.transaction.annotation.Transactional
+import spock.lang.Shared
 
 import static org.springframework.http.HttpStatus.*
 import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED
@@ -15,6 +16,11 @@ import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORT
 @Transactional(propagation = NOT_SUPPORTED)
 class CustomerControllerIntegrationSpec extends IntegrationSpec {
 
+    @Shared
+    String usa = 'usa'
+
+    @Shared
+    String uk = 'uk'
 
     @Autowired
     TestRestTemplate restTemplate
@@ -125,7 +131,7 @@ class CustomerControllerIntegrationSpec extends IntegrationSpec {
     void 'should POST and store customer'() {
         setup:
             CustomerInDto customerInDto = new CustomerInDto(
-                    'Darth', 'Vader', USA, 'darth@test.com', '123')
+                    'Darth', 'Vader', usa, 'darth@test.com', '123')
         when:
             ResponseEntity<Void> response = restTemplate
                     .withBasicAuth(USERNAME, PASSWORD)
@@ -152,14 +158,14 @@ class CustomerControllerIntegrationSpec extends IntegrationSpec {
             }
         where:
             name  | surname | country | email          | password || expectedStatusCode
-            ''    | 'Sawyer'| USA     | 'tom@test.org' | 'qwe123' || BAD_REQUEST
-            'Tom' | ''      | USA     | 'tom@test.org' | 'qwe123' || BAD_REQUEST
+            ''    | 'Sawyer'| usa     | 'tom@test.org' | 'qwe123' || BAD_REQUEST
+            'Tom' | ''      | usa     | 'tom@test.org' | 'qwe123' || BAD_REQUEST
             'Tom' | 'Sawyer'| ''      | 'tom@test.org' | 'qwe123' || BAD_REQUEST
-            'Tom' | 'Sawyer'| USA     | ''             | 'qwe123' || BAD_REQUEST
-            'Tom' | 'Sawyer'| USA     | 'doe@test.com' | 'qwe123' || BAD_REQUEST
-            'Tom' | 'Sawyer'| USA     | 'DOE@TEST.COM' | 'qwe123' || BAD_REQUEST
-            'Tom' | 'Sawyer'| USA     | 'DOE@TEST.COM' | ''       || BAD_REQUEST
-            'John'| 'Doe'   | USA     | 'doe@test.com' | 'qwe123' || BAD_REQUEST
+            'Tom' | 'Sawyer'| usa     | ''             | 'qwe123' || BAD_REQUEST
+            'Tom' | 'Sawyer'| usa     | 'doe@test.com' | 'qwe123' || BAD_REQUEST
+            'Tom' | 'Sawyer'| usa     | 'DOE@TEST.COM' | 'qwe123' || BAD_REQUEST
+            'Tom' | 'Sawyer'| usa     | 'DOE@TEST.COM' | ''       || BAD_REQUEST
+            'John'| 'Doe'   | usa     | 'doe@test.com' | 'qwe123' || BAD_REQUEST
 
 
     }
@@ -169,7 +175,7 @@ class CustomerControllerIntegrationSpec extends IntegrationSpec {
             CustomerInDto customerInDto = CustomerInDto.builder()
                     .name('Steve')
                     .surname(surname)
-                    .country(UK)
+                    .country(uk)
                     .email(email)
                     .password('qwe123').build()
             HttpHeaders headers = new HttpHeaders()

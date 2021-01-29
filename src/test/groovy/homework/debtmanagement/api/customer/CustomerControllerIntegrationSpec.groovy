@@ -11,9 +11,8 @@ import org.springframework.transaction.annotation.Transactional
 import spock.lang.Shared
 
 import static org.springframework.http.HttpStatus.*
-import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED
 
-@Transactional(propagation = NOT_SUPPORTED)
+@Transactional
 class CustomerControllerIntegrationSpec extends IntegrationSpec {
 
     @Shared

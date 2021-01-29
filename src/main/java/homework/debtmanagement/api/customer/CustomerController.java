@@ -6,7 +6,6 @@ import homework.debtmanagement.model.dto.out.CustomerDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -14,7 +13,6 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@Validated
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "api/customers", produces = APPLICATION_JSON_VALUE)

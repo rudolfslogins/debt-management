@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApiSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()

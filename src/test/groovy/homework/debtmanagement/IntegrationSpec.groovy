@@ -12,7 +12,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @ActiveProfiles('test')
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Transactional
-abstract class IntegrationSpec extends Specification{
+abstract class IntegrationSpec extends Specification {
 
     public static final String CUSTOMERS_URI = 'customers'
 

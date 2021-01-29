@@ -16,7 +16,7 @@ Property *`seed-data: true`* in properties file *`src\main\resources\application
 
 ##### Building and running project
 - Navigate to project root folder run *`.\gradlew clean build`* to build project, *`.\gradlew bootRun`* to run project
-- Navigate to *`http://localhost:8080/swagger-ui.html`* in browser to explore available http methods
+- Navigate to *`http://localhost:8080/swagger-ui/`* in browser to explore available http methods
 - Basic Authentication credentials:\
 *username:* user\
 *password:* password

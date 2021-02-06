@@ -31,50 +31,69 @@ public class SeedData implements CommandLineRunner {
 
     private void loadSeedData() {
         if (customerRepository.count() == 0 && seedData) {
-            Customer customer1 = new Customer();
-            customer1.setName("John");
-            customer1.setSurname("Doe");
-            customer1.setCountry("USA");
-            customer1.setEmail("doe@test.com");
-            customer1.setPassword("abc123");
+            Customer customer1 = createCustomer(
+                    "John",
+                    "Doe",
+                    "USA",
+                    "doe@test.com",
+                    "abc123");
 
-            Customer customer2 = new Customer();
-            customer2.setName("Jeff");
-            customer2.setSurname("Cook");
-            customer2.setCountry("UK");
-            customer2.setEmail("cook@test.com");
-            customer2.setPassword("def456");
+            Customer customer2 = createCustomer(
+                    "Jeff",
+                    "Cook",
+                    "UK",
+                    "cook@test.com",
+                    "def456");
 
-            Customer customer3 = new Customer();
-            customer3.setName("Mickey");
-            customer3.setSurname("Jones");
-            customer3.setCountry("UK");
-            customer3.setEmail("mickey@test.com");
-            customer3.setPassword("ghi789");
+            Customer customer3 = createCustomer(
+                    "Mickey",
+                    "Jones",
+                    "UK",
+                    "mickey@test.com",
+                    "ghi789");
 
             customerRepository.saveAll(List.of(customer1, customer2, customer3));
 
-            Debt debt1 = new Debt();
-            debt1.setCustomer(customer1);
-            debt1.setAmount(BigDecimal.valueOf(100.00));
-            debt1.setCurrency("USD");
-            debt1.setDueDate(LocalDate.now().plusMonths(1));
+            Debt debt1 = createDebt(
+                    customer1,
+                    BigDecimal.valueOf(100.00),
+                    "USD",
+                    LocalDate.now().plusMonths(1));
 
-            Debt debt2 = new Debt();
-            debt2.setCustomer(customer1);
-            debt2.setAmount(BigDecimal.valueOf(200.00));
-            debt2.setCurrency("USD");
-            debt2.setDueDate(LocalDate.now().plusMonths(2));
+            Debt debt2 = createDebt(
+                    customer1,
+                    BigDecimal.valueOf(200.00),
+                    "USD",
+                    LocalDate.now().plusMonths(2));
 
-            Debt debt3 = new Debt();
-            debt3.setCustomer(customer2);
-            debt3.setAmount(BigDecimal.valueOf(200.00));
-            debt3.setCurrency("GBP");
-            debt3.setDueDate(LocalDate.now().plusMonths(1).plusWeeks(2));
+            Debt debt3 = createDebt(
+                    customer2,
+                    BigDecimal.valueOf(200.00),
+                    "GBP",
+                    LocalDate.now().plusMonths(1).plusWeeks(2));
 
             debtRepository.saveAll(List.of(debt1, debt2, debt3));
 
             System.out.println("Seed data loaded");
         }
+    }
+
+    private Customer createCustomer(String name, String surname, String country, String email, String password) {
+        Customer customer = new Customer();
+        customer.setName(name);
+        customer.setSurname(surname);
+        customer.setCountry(country);
+        customer.setEmail(email);
+        customer.setPassword(password);
+        return customer;
+    }
+
+    private Debt createDebt(Customer customer, BigDecimal amount, String currency, LocalDate dueDate) {
+        Debt debt = new Debt();
+        debt.setCustomer(customer);
+        debt.setAmount(amount);
+        debt.setCurrency(currency);
+        debt.setDueDate(dueDate);
+        return debt;
     }
 }
